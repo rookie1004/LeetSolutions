@@ -1,0 +1,155 @@
+class Solution {
+    
+    public int binarySearch(Map<Integer, Integer> map, int target, Integer pos){
+        //Collection<Integer> values = map.values();
+        ArrayList<Integer> listOfValues = new ArrayList<Integer>(map.values());
+        ArrayList<Integer> listOfKeys = new ArrayList<Integer>(map.keySet());        
+        int l=0, h=listOfValues.size()-1, m=0, ans=-1;
+        int posi = pos.intValue();
+        
+        while(l<=h){
+            m = (l+h)/2;
+            if(target>listOfValues.get(m)){
+                l=m+1;
+            }
+            else if(target==listOfValues.get(m)){
+                if(listOfKeys.get(m)==posi){
+                    l=m+1;
+                }
+                else if(listOfKeys.get(m)>posi){
+                    ans = listOfKeys.get(m);
+                    h=m-1;
+                }
+                else{
+                    ans = listOfKeys.get(m);
+                    break;
+                }
+            }
+            else if(target<listOfValues.get(m)){
+                h=m-1;
+            }
+        }
+        return ans;
+    }
+    
+    // function to sort hashmap by values 
+    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> hm) 
+    { 
+        // Create a list from elements of HashMap 
+        List<Map.Entry<Integer, Integer> > list = 
+               new LinkedList<Map.Entry<Integer, Integer> >(hm.entrySet()); 
+  
+        // Sort the list 
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer> >() { 
+            public int compare(Map.Entry<Integer, Integer> o1,  
+                               Map.Entry<Integer, Integer> o2) 
+            { 
+                return (o1.getValue()).compareTo(o2.getValue()); 
+            } 
+        }); 
+          
+        // put data from sorted list to hashmap  
+        HashMap<Integer, Integer> temp = new LinkedHashMap<Integer, Integer>(); 
+        for (Map.Entry<Integer, Integer> aa : list) { 
+            temp.put(aa.getKey(), aa.getValue()); 
+        } 
+        return temp; 
+    } 
+    
+    public int[] twoSum(int[] nums, int target) {
+        
+        Integer a;
+        int pos;
+        int res[] = new int[2];
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<nums.length; i++){
+            map.put(i,nums[i]);
+        }
+        
+        Map<Integer, Integer> map1 = sortByValue(map);
+        
+        for (Map.Entry<Integer, Integer> en : map1.entrySet()) { 
+            a = en.getValue();
+            pos = binarySearch(map1, target-a, en.getKey());
+            if(pos!=-1){
+                res[0] = en.getKey();
+                res[1] = pos;
+                break;
+            }
+        }
+        
+        return res;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // int res[] = new int[2];
+        // for(int i=0;i<nums.length-1;i++){
+        //     for(int j=i+1;j<nums.length;j++){
+        //             if(nums[i]+nums[j]==target){
+        //                 res[0] = i;
+        //                 res[1] = j;
+        //                 return res;
+        //         }
+        //     }
+        // }
+        // return res;
+        
+//         int flag=0, l=0, h=nums.length-1, val, x, i;
+//         int res[] = new int[2];
+//         while(l<=h){
+//             i=0;
+//             x=nums[i];
+//             val=target-x;
+            
+//             m = (l+h)/2;
+//             if(val>nums[m]){
+//                 l=m+1;
+//                 continue;
+                
+//             }
+//             else if(val==nums[m]){
+//                 flag=1;
+//                 //res[1]=
+//                 break;
+//             }
+//             else if(val<nums[m]){
+//                 h=m-1;
+//                 continue;
+//             }                   
+//             else if(l<=h && flag==0){
+//                 i++;
+//                 l=0;
+//                 h=nums.length-1;
+//             }
+            
+//         }        
+    }
+}

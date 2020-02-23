@@ -1,0 +1,38 @@
+class Solution {
+    public int calPoints(String[] ops) {
+        int counter=0, sum=0;
+        ArrayList<Integer> validPos = new ArrayList<Integer>();
+        ArrayList<Integer> validNum = new ArrayList<Integer>();
+        for(int i=0; i< ops.length; i++){
+            if(ops[i].charAt(0) == '+'){
+                sum += validNum.get(counter-1) + validNum.get(counter-2);
+                validPos.add(counter);
+                validNum.add(counter, validNum.get(counter-1) + validNum.get(counter-2));
+                counter++;                
+            }
+            else if(Character.isLetter(ops[i].charAt(0))){
+                switch(ops[i].charAt(0)){
+                    case 'D':
+                        sum += validNum.get(validPos.get(counter-1))*2;
+                        validPos.add(counter);
+                        validNum.add(counter, validNum.get(validPos.get(counter-1))*2);
+                        counter++;
+                        break;
+                    case 'C':
+                        sum -= validNum.get(validPos.get(counter-1));
+                        validNum.remove(counter-1);
+                        validPos.remove(counter-1);
+                        counter--;
+                        break;
+                }
+            }
+            else{
+                sum += Integer.parseInt(ops[i]);
+                validPos.add(counter);
+                validNum.add(counter, Integer.parseInt(ops[i]));
+                counter++;
+            }
+        }
+        return sum;
+    }
+}
