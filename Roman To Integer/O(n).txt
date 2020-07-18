@@ -1,0 +1,36 @@
+class Solution {
+    public int romanToInt(String s) {
+        char value[] = s.toCharArray();
+        int sum=0, cons=0, prev=0;
+        for(int i=0; i<value.length; i++){
+            char temp = value[i];
+            switch(temp){
+                case 'I':
+                    cons = 1;
+                    break;
+                case 'V':
+                    cons = 5;
+                    break;
+                case 'X':
+                    cons = 10;
+                    break;
+                case 'L':
+                    cons = 50;
+                    break;
+                case 'C':
+                    cons = 100;
+                    break;
+                case 'D':
+                    cons = 500;
+                    break;
+                case 'M':
+                    cons = 1000;
+                    break;
+            }
+            if(i==0) prev = cons;
+            sum = (cons <= prev) ? sum + cons : sum + cons - prev - prev;
+            prev = cons;
+        }
+        return sum;
+    }
+}
